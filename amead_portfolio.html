@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amead Eshpari — AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --cyan: #00f5ff;
+  --purple: #bf00ff;
+  --green: #00ff88;
+  --pink: #ff0080;
+  --bg: #04070f;
+  --bg2: #070c18;
+  --bg3: #0b1220;
+  --card: #0d1528;
+  --text: #b8cfe0;
+  --dim: #4a6a8a;
+  --border: rgba(0,245,255,0.12);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: 'Rajdhani', sans-serif; overflow-x: hidden; cursor: none; }
+#cur-dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); box-shadow: 0 0 12px var(--cyan), 0 0 24px rgba(0,245,255,0.4); transition: width 0.2s, height 0.2s, background 0.2s; }
+#cur-ring { width: 32px; height: 32px; border: 1px solid rgba(0,245,255,0.5); border-radius: 50%; position: fixed; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: width 0.3s, height 0.3s, border-color 0.3s; }
+body.hov #cur-dot { width: 14px; height: 14px; background: var(--purple); box-shadow: 0 0 20px var(--purple); }
+body.hov #cur-ring { width: 50px; height: 50px; border-color: rgba(191,0,255,0.6); }
+.bg-grid { position: fixed; inset: 0; background-image: linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px); background-size: 64px 64px; pointer-events: none; z-index: 0; }
+.bg-scan { position: fixed; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(0,245,255,0.01) 3px, rgba(0,245,255,0.01) 4px); pointer-events: none; z-index: 1; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 900; display: flex; align-items: center; justify-content: space-between; padding: 0 6vw; height: 66px; background: rgba(4,7,15,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); }
+.nav-logo { font-family: 'Orbitron', monospace; font-size: 0.88rem; font-weight: 700; color: var(--cyan); text-shadow: 0 0 16px var(--cyan); letter-spacing: 4px; text-decoration: none; }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--dim); text-decoration: none; position: relative; padding-bottom: 4px; transition: color 0.25s; }
+.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); transition: width 0.3s; }
+.nav-links a:hover { color: var(--cyan); }
+.nav-links a:hover::after { width: 100%; }
+
+/* HERO */
+#hero { position: relative; min-height: 100vh; display: flex; align-items: center; padding: 100px 6vw 80px; z-index: 10; overflow: hidden; gap: 60px; }
+.orb { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+.orb1 { width: 480px; height: 480px; background: rgba(0,245,255,0.05); top: -80px; right: -40px; animation: floaty 11s ease-in-out infinite; }
+.orb2 { width: 320px; height: 320px; background: rgba(191,0,255,0.05); bottom: -60px; right: 18%; animation: floaty 14s ease-in-out infinite reverse; }
+.orb3 { width: 220px; height: 220px; background: rgba(0,255,136,0.04); top: 55%; left: -40px; animation: floaty 9s ease-in-out infinite 1.5s; }
+@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-36px)} }
+.hero-l { flex: 1; min-width: 0; }
+.hero-r { flex: 0 0 auto; }
+.h-tag { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; opacity: 0; animation: fup 0.7s 0.2s forwards; }
+.h-tag-line { width: 30px; height: 1px; background: var(--cyan); box-shadow: 0 0 6px var(--cyan); flex-shrink: 0; }
+.h-tag span { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 3.5px; color: var(--cyan); text-transform: uppercase; }
+.h-name { font-family: 'Orbitron', monospace; font-weight: 900; line-height: 1.0; margin-bottom: 22px; opacity: 0; animation: fup 0.7s 0.4s forwards; }
+.h-name .l1 { font-size: clamp(3rem, 6.5vw, 5.8rem); color: #fff; display: block; text-shadow: 0 0 50px rgba(255,255,255,0.12); }
+.h-name .l2 { font-size: clamp(3rem, 6.5vw, 5.8rem); color: transparent; display: block; -webkit-text-stroke: 1.5px var(--cyan); filter: drop-shadow(0 0 18px rgba(0,245,255,0.55)); }
+.h-role { font-size: clamp(0.8rem, 1.6vw, 1rem); font-weight: 400; letter-spacing: 5px; text-transform: uppercase; color: var(--dim); margin-bottom: 26px; opacity: 0; animation: fup 0.7s 0.6s forwards; }
+.h-role em { font-style: normal; color: var(--purple); text-shadow: 0 0 10px rgba(191,0,255,0.5); }
+.h-desc { font-size: 1rem; line-height: 1.82; color: var(--dim); max-width: 500px; margin-bottom: 42px; opacity: 0; animation: fup 0.7s 0.8s forwards; }
+.h-desc strong { color: var(--text); font-weight: 600; }
+.h-btns { display: flex; gap: 14px; flex-wrap: wrap; opacity: 0; animation: fup 0.7s 1s forwards; }
+.btn { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; padding: 13px 26px; text-decoration: none; cursor: none; position: relative; overflow: hidden; transition: box-shadow 0.3s, background 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+.btn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent); transition: left 0.5s; }
+.btn:hover::before { left: 100%; }
+.btn-c { color: var(--cyan); border: 1px solid var(--cyan); background: rgba(0,245,255,0.04); text-shadow: 0 0 8px rgba(0,245,255,0.4); box-shadow: 0 0 18px rgba(0,245,255,0.1), inset 0 0 18px rgba(0,245,255,0.03); }
+.btn-c:hover { background: rgba(0,245,255,0.1); box-shadow: 0 0 28px rgba(0,245,255,0.22); }
+.btn-p { color: var(--purple); border: 1px solid var(--purple); background: rgba(191,0,255,0.04); text-shadow: 0 0 8px rgba(191,0,255,0.4); box-shadow: 0 0 18px rgba(191,0,255,0.1); }
+.btn-p:hover { background: rgba(191,0,255,0.1); box-shadow: 0 0 28px rgba(191,0,255,0.22); }
+
+/* TERMINAL */
+.terminal { background: rgba(7,12,24,0.95); border: 1px solid var(--border); width: 268px; position: relative; overflow: hidden; opacity: 0; animation: fup 0.7s 1.2s forwards; }
+.terminal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--purple)); box-shadow: 0 0 10px var(--cyan); }
+.t-head { padding: 10px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
+.td { width: 8px; height: 8px; border-radius: 50%; }
+.td.r{background:#ff5f57} .td.y{background:#ffbd2e} .td.g{background:#28ca41}
+.t-ttl { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--dim); letter-spacing: 2px; margin-left: 6px; }
+.t-body { padding: 14px 14px; font-family: 'Share Tech Mono', monospace; font-size: 0.63rem; line-height: 1.95; }
+.t-row { display: flex; gap: 8px; }
+.t-k { color: var(--cyan); min-width: 76px; flex-shrink: 0; }
+.t-v { color: #e0eeff; }
+.t-v.g { color: var(--green); }
+.t-v.p { color: var(--purple); }
+.t-cur { display: inline-block; width: 6px; height: 11px; background: var(--cyan); animation: blink 1s infinite; vertical-align: middle; margin-left: 3px; box-shadow: 0 0 6px var(--cyan); }
+@keyframes blink { 0%,49%{opacity:1} 50%,100%{opacity:0} }
+
+/* SECTIONS */
+.sec { position: relative; z-index: 10; padding: 96px 6vw; }
+.sec-alt { background: var(--bg2); }
+.s-hdr { display: flex; align-items: center; gap: 16px; margin-bottom: 60px; }
+.s-num { font-family: 'Share Tech Mono', monospace; font-size: 0.66rem; color: var(--cyan); letter-spacing: 3px; white-space: nowrap; }
+.s-ttl { font-family: 'Orbitron', monospace; font-size: clamp(1.2rem, 2.2vw, 1.7rem); font-weight: 700; color: #fff; letter-spacing: 3px; white-space: nowrap; }
+.s-rule { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,245,255,0.35), transparent); }
+
+/* ABOUT */
+.ab-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 64px; align-items: start; }
+.ab-text p { font-size: 1rem; line-height: 1.85; color: var(--dim); margin-bottom: 18px; }
+.ab-text p strong { color: var(--cyan); font-weight: 600; text-shadow: 0 0 8px rgba(0,245,255,0.3); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.stat { background: var(--card); border: 1px solid var(--border); padding: 22px 18px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; }
+.stat::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--purple)); box-shadow: 0 0 8px var(--cyan); }
+.stat:hover { transform: translateY(-5px); border-color: rgba(0,245,255,0.3); box-shadow: 0 12px 30px rgba(0,245,255,0.08); }
+.sn { font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 900; color: var(--cyan); text-shadow: 0 0 18px rgba(0,245,255,0.55); line-height: 1; margin-bottom: 6px; }
+.sl { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 2px; color: var(--dim); text-transform: uppercase; }
+
+/* SKILLS */
+.sk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; }
+.sk-card { background: var(--card); border: 1px solid var(--border); padding: 26px; position: relative; overflow: hidden; transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s; cursor: none; }
+.sk-card::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--purple)); box-shadow: 0 0 10px var(--cyan); transition: width 0.4s; }
+.sk-card:hover { transform: translateY(-5px); border-color: rgba(0,245,255,0.28); box-shadow: 0 14px 36px rgba(0,245,255,0.07); }
+.sk-card:hover::after { width: 100%; }
+.sk-ico { font-size: 1.5rem; margin-bottom: 11px; display: block; }
+.sk-nm { font-family: 'Orbitron', monospace; font-size: 0.68rem; font-weight: 700; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; text-shadow: 0 0 8px rgba(0,245,255,0.35); }
+.sk-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.sk-t { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; padding: 3px 8px; background: rgba(0,245,255,0.05); border: 1px solid rgba(0,245,255,0.16); color: var(--dim); letter-spacing: 0.5px; transition: all 0.2s; cursor: none; }
+.sk-t:hover { background: rgba(0,245,255,0.1); color: var(--cyan); border-color: rgba(0,245,255,0.4); }
+
+/* PROJECTS */
+.pr-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 22px; }
+.pr { background: var(--card); border: 1px solid var(--border); position: relative; overflow: hidden; transition: transform 0.35s, border-color 0.35s, box-shadow 0.35s; cursor: none; display: flex; flex-direction: column; }
+.pr-glow { position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink)); transform: scaleX(0); transform-origin: left; transition: transform 0.4s; box-shadow: 0 0 12px var(--cyan); }
+.pr:hover { transform: translateY(-7px); border-color: rgba(0,245,255,0.28); box-shadow: 0 18px 48px rgba(0,245,255,0.09); }
+.pr:hover .pr-glow { transform: scaleX(1); }
+.pr-top { padding: 22px 22px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+.pr-badge { font-family: 'Share Tech Mono', monospace; font-size: 0.57rem; letter-spacing: 2px; padding: 4px 9px; border: 1px solid; text-transform: uppercase; }
+.bl { color: var(--green); border-color: var(--green); box-shadow: 0 0 8px rgba(0,255,136,0.18); }
+.bb { color: var(--purple); border-color: var(--purple); box-shadow: 0 0 8px rgba(191,0,255,0.18); }
+.bd { color: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px rgba(0,245,255,0.18); }
+.pr-n { font-family: 'Orbitron', monospace; font-size: 2.8rem; font-weight: 900; color: rgba(0,245,255,0.06); line-height: 1; }
+.pr-body { padding: 16px 22px 24px; flex: 1; display: flex; flex-direction: column; }
+.pr-nm { font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700; color: #fff; letter-spacing: 1.5px; margin-bottom: 10px; }
+.pr-desc { font-size: 0.9rem; line-height: 1.75; color: var(--dim); margin-bottom: 18px; flex: 1; }
+.pr-stack { display: flex; flex-wrap: wrap; gap: 5px; }
+.pt { font-family: 'Share Tech Mono', monospace; font-size: 0.57rem; padding: 3px 7px; background: rgba(191,0,255,0.06); border: 1px solid rgba(191,0,255,0.2); color: rgba(191,0,255,0.75); letter-spacing: 0.5px; transition: all 0.2s; }
+.pt:hover { background: rgba(191,0,255,0.12); color: var(--purple); border-color: var(--purple); }
+
+/* CONTACT */
+#contact { text-align: center; }
+.ct-wrap { max-width: 540px; margin: 0 auto; }
+.ct-sub { font-family: 'Share Tech Mono', monospace; font-size: 0.7rem; color: var(--cyan); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 14px; }
+.ct-desc { font-size: 1rem; color: var(--dim); line-height: 1.7; margin-bottom: 30px; }
+.ct-email { display: inline-block; font-family: 'Orbitron', monospace; font-size: clamp(0.88rem, 2.2vw, 1.2rem); color: var(--cyan); text-decoration: none; text-shadow: 0 0 16px rgba(0,245,255,0.45); margin-bottom: 34px; letter-spacing: 1px; transition: text-shadow 0.3s; position: relative; }
+.ct-email::after { content: ''; position: absolute; bottom: -4px; left: 0; right: 0; height: 1px; background: var(--cyan); box-shadow: 0 0 8px var(--cyan); transform: scaleX(0); transition: transform 0.3s; }
+.ct-email:hover::after { transform: scaleX(1); }
+.ct-email:hover { text-shadow: 0 0 28px rgba(0,245,255,0.7), 0 0 56px rgba(0,245,255,0.25); }
+.ct-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+.cl { font-family: 'Share Tech Mono', monospace; font-size: 0.68rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--dim); text-decoration: none; padding: 11px 22px; border: 1px solid rgba(0,245,255,0.18); background: rgba(0,245,255,0.03); transition: all 0.3s; cursor: none; position: relative; overflow: hidden; }
+.cl::before { content: ''; position: absolute; inset: 0; background: rgba(0,245,255,0.06); transform: translateX(-100%); transition: transform 0.3s; }
+.cl:hover::before { transform: translateX(0); }
+.cl:hover { color: var(--cyan); border-color: rgba(0,245,255,0.45); box-shadow: 0 0 18px rgba(0,245,255,0.1); }
+
+/* FOOTER */
+footer { position: relative; z-index: 10; padding: 20px 6vw; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+footer span { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; color: var(--dim); letter-spacing: 2px; }
+footer em { font-style: normal; color: var(--cyan); }
+
+/* REVEAL */
+.r { opacity: 0; transform: translateY(26px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.r.in { opacity: 1; transform: none; }
+.d1{transition-delay:0.08s} .d2{transition-delay:0.16s} .d3{transition-delay:0.24s} .d4{transition-delay:0.32s}
+@keyframes fup { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+
+/* MOBILE */
+@media(max-width:900px){
+  #hero{flex-direction:column; padding:90px 6vw 70px; gap:40px;}
+  .hero-r{width:100%;}
+  .terminal{width:100%;}
+  .ab-grid{grid-template-columns:1fr; gap:36px;}
+  body{cursor:auto;}
+  #cur-dot,#cur-ring{display:none;}
+  .nav-links{display:none;}
+  footer{justify-content:center;text-align:center;}
+}
+@media(max-width:520px){
+  .stats{grid-template-columns:1fr 1fr;}
+  .sk-grid{grid-template-columns:1fr;}
+  .pr-grid{grid-template-columns:1fr;}
+  .h-btns{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<div id="cur-dot"></div>
+<div id="cur-ring"></div>
+<div class="bg-grid"></div>
+<div class="bg-scan"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">AE.SYS</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="hero-l">
+    <div class="h-tag">
+      <div class="h-tag-line"></div>
+      <span>AI Engineer · Security Specialist · System Builder</span>
+    </div>
+    <h1 class="h-name">
+      <span class="l1">AMEAD</span>
+      <span class="l2">ESHPARI</span>
+    </h1>
+    <p class="h-role">Multi-Agent Systems · <em>AI Infrastructure</em> · Security Automation</p>
+    <p class="h-desc">
+      Building autonomous AI systems from the ground up. <strong>Self-hosted 235B parameter LLMs</strong>, 200+ agent orchestration frameworks, and AI-driven security automation — all engineered independently.
+    </p>
+    <div class="h-btns">
+      <a href="#projects" class="btn btn-c">↓ View Projects</a>
+      <a href="#contact" class="btn btn-p">Get In Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-r">
+    <div class="terminal">
+      <div class="t-head">
+        <div class="td r"></div><div class="td y"></div><div class="td g"></div>
+        <span class="t-ttl">NOVA_STATUS.SH</span>
+      </div>
+      <div class="t-body">
+        <div class="t-row"><span class="t-k">STATUS</span><span class="t-v g">● ONLINE</span></div>
+        <div class="t-row"><span class="t-k">LOCATION</span><span class="t-v">HAYWARD, CA</span></div>
+        <div class="t-row"><span class="t-k">EMPLOYER</span><span class="t-v">APPLE GSOC</span></div>
+        <div class="t-row"><span class="t-k">MODEL</span><span class="t-v">QWEN3-235B</span></div>
+        <div class="t-row"><span class="t-k">GPU</span><span class="t-v">2x A100 80GB</span></div>
+        <div class="t-row"><span class="t-k">AGENTS</span><span class="t-v g">200+ ACTIVE</span></div>
+        <div class="t-row"><span class="t-k">MEMORY</span><span class="t-v p">LANCEDB+PINE</span></div>
+        <div class="t-row"><span class="t-k">GATEWAY</span><span class="t-v">OPENCLAW 2026</span></div>
+        <div class="t-row"><span class="t-k">&gt;</span><span class="t-cur"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="s-hdr r"><span class="s-num">01 //</span><h2 class="s-ttl">ABOUT</h2><div class="s-rule"></div></div>
+  <div class="ab-grid">
+    <div class="ab-text">
+      <p class="r d1">I'm an <strong>AI Engineer and Security Automation Specialist</strong> who builds production-grade autonomous AI systems from scratch — not just prompting APIs, but architecting full inference stacks, agent frameworks, and memory hierarchies.</p>
+      <p class="r d2">By day I work as a <strong>GSOC Analyst at Apple</strong>, managing enterprise-scale security operations across global infrastructure. Off the clock, I design and ship complex AI systems independently.</p>
+      <p class="r d3">I built <strong>Nova</strong> — a fully self-hosted autonomous AI running a 235B parameter LLM on dual A100 GPUs, with 200+ agents, adversarial quality control, and persistent vector memory. No tutorials. Just engineering.</p>
+    </div>
+    <div class="stats r d2">
+      <div class="stat"><div class="sn">235B</div><div class="sl">LLM Params</div></div>
+      <div class="stat"><div class="sn">200+</div><div class="sl">Active Agents</div></div>
+      <div class="stat"><div class="sn">2×</div><div class="sl">A100 80GB</div></div>
+      <div class="stat"><div class="sn">∞</div><div class="sl">Curiosity</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="sec sec-alt">
+  <div class="s-hdr r"><span class="s-num">02 //</span><h2 class="s-ttl">SKILLS</h2><div class="s-rule"></div></div>
+  <div class="sk-grid">
+    <div class="sk-card r d1"><span class="sk-ico">🤖</span><div class="sk-nm">AI & LLM Infrastructure</div><div class="sk-tags"><span class="sk-t">vLLM</span><span class="sk-t">LangGraph</span><span class="sk-t">LangChain</span><span class="sk-t">Claude API</span><span class="sk-t">RAG Pipelines</span><span class="sk-t">OpenClaw</span><span class="sk-t">MCP</span><span class="sk-t">Prompt Engineering</span></div></div>
+    <div class="sk-card r d2"><span class="sk-ico">⚡</span><div class="sk-nm">Multi-Agent Systems</div><div class="sk-tags"><span class="sk-t">200+ Agent Frameworks</span><span class="sk-t">Judge Panel</span><span class="sk-t">Autonomous Loops</span><span class="sk-t">Agent Memory</span><span class="sk-t">Tool Calling</span><span class="sk-t">Orchestration</span></div></div>
+    <div class="sk-card r d3"><span class="sk-ico">🛡️</span><div class="sk-nm">Security Operations</div><div class="sk-tags"><span class="sk-t">Lenel Access Control</span><span class="sk-t">Milestone VMS</span><span class="sk-t">SIEM</span><span class="sk-t">Incident Response</span><span class="sk-t">Wireshark</span><span class="sk-t">Threat Triage</span></div></div>
+    <div class="sk-card r d1"><span class="sk-ico">💻</span><div class="sk-nm">Programming</div><div class="sk-tags"><span class="sk-t">Python</span><span class="sk-t">C++</span><span class="sk-t">Bash</span><span class="sk-t">Shell Scripting</span></div></div>
+    <div class="sk-card r d2"><span class="sk-ico">🔧</span><div class="sk-nm">Infrastructure & DevOps</div><div class="sk-tags"><span class="sk-t">Linux</span><span class="sk-t">Docker</span><span class="sk-t">RunPod GPU</span><span class="sk-t">VMware</span><span class="sk-t">TCP/IP</span><span class="sk-t">VLANs</span></div></div>
+    <div class="sk-card r d3"><span class="sk-ico">🧠</span><div class="sk-nm">Data & Memory</div><div class="sk-tags"><span class="sk-t">LanceDB</span><span class="sk-t">Pinecone</span><span class="sk-t">Vector Embeddings</span><span class="sk-t">Memory Hierarchy</span><span class="sk-t">nomic-embed-text</span></div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="sec">
+  <div class="s-hdr r"><span class="s-num">03 //</span><h2 class="s-ttl">PROJECTS</h2><div class="s-rule"></div></div>
+  <div class="pr-grid">
+    <div class="pr r d1">
+      <div class="pr-glow"></div>
+      <div class="pr-top"><span class="pr-badge bl">● Live</span><span class="pr-n">01</span></div>
+      <div class="pr-body">
+        <div class="pr-nm">NOVA — Autonomous AI System</div>
+        <div class="pr-desc">Self-hosted autonomous AI assistant running Qwen3-235B on dual A100 GPUs. 200+ agent orchestration framework with Judge Panel quality control, three-layer memory hierarchy, AI security workflows, and full VPS integration.</div>
+        <div class="pr-stack"><span class="pt">Python</span><span class="pt">vLLM</span><span class="pt">LangGraph</span><span class="pt">LanceDB</span><span class="pt">Pinecone</span><span class="pt">OpenClaw</span><span class="pt">Docker</span><span class="pt">RunPod</span></div>
+      </div>
+    </div>
+    <div class="pr r d2">
+      <div class="pr-glow"></div>
+      <div class="pr-top"><span class="pr-badge bb">◈ Building</span><span class="pr-n">02</span></div>
+      <div class="pr-body">
+        <div class="pr-nm">AI Trading Bot</div>
+        <div class="pr-desc">Multi-agent algorithmic trading system with specialized sentiment, technical, fundamentals, and risk management agents. Claude as the reasoning brain with Alpaca API for paper and live execution, and safety-mode governance.</div>
+        <div class="pr-stack"><span class="pt">Python</span><span class="pt">Claude API</span><span class="pt">TradingAgents</span><span class="pt">Alpaca API</span><span class="pt">LangGraph</span></div>
+      </div>
+    </div>
+    <div class="pr r d3">
+      <div class="pr-glow"></div>
+      <div class="pr-top"><span class="pr-badge bd">✓ Completed</span><span class="pr-n">03</span></div>
+      <div class="pr-body">
+        <div class="pr-nm">NASA Robotics Competition</div>
+        <div class="pr-desc">Designed and programmed autonomous robotic systems for a NASA-affiliated engineering competition. Applied C++ and embedded systems knowledge under real-world constraints and competition pressure.</div>
+        <div class="pr-stack"><span class="pt">C++</span><span class="pt">Embedded Systems</span><span class="pt">Autonomous Systems</span><span class="pt">Robotics</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="sec sec-alt">
+  <div class="ct-wrap">
+    <div class="s-hdr r" style="justify-content:center;margin-bottom:36px;"><span class="s-num">04 //</span><h2 class="s-ttl">CONTACT</h2></div>
+    <p class="ct-sub r">Open to Opportunities</p>
+    <p class="ct-desc r">Looking for AI Engineer, Security Automation, or Multi-Agent Systems roles. Remote preferred.</p>
+    <a href="mailto:ameadeshpari@gmail.com" class="ct-email r">ameadeshpari@gmail.com</a>
+    <div class="ct-links r">
+      <a href="https://linkedin.com/in/amead-eshpari-233137180" class="cl" target="_blank">↗ LinkedIn</a>
+      <a href="https://github.com/TheUnknownBlock" class="cl" target="_blank">↗ GitHub</a>
+      <a href="mailto:ameadeshpari@gmail.com" class="cl">✉ Email</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 <em>AMEAD ESHPARI</em></span>
+  <span>ENGINEERED WITH <em>Claude</em> · AI ENGINEER · HAYWARD, CA</span>
+</footer>
+
+<script>
+// Cursor
+const dot=document.getElementById('cur-dot'),ring=document.getElementById('cur-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
+(function a(){dot.style.cssText+=`;left:${mx}px;top:${my}px`;rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.cssText+=`;left:${rx}px;top:${ry}px`;requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.sk-card,.pr,.stat,.btn,.cl,.sk-t,.pt').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
+});
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');}),{threshold:0.1});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+
+// Nav scroll
+window.addEventListener('scroll',()=>document.querySelector('nav').style.background=scrollY>50?'rgba(4,7,15,0.97)':'rgba(4,7,15,0.9)');
+
+// Typing hero tag
+const tag=document.querySelector('.h-tag span');
+const txt=tag.textContent; tag.textContent=''; let i=0;
+setTimeout(()=>{const t=setInterval(()=>{tag.textContent+=txt[i++];if(i>=txt.length)clearInterval(t);},30);},600);
+</script>
+</body>
+</html>
