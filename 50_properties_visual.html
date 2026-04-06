@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>50 Acquirable Properties — Amead Eshpari</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07090c;
+    --bg2: #0d1117;
+    --card: #0e1520;
+    --border: #182030;
+    --cyan: #00f5ff;
+    --green: #00ff88;
+    --orange: #ff9500;
+    --red: #ff3a5c;
+    --purple: #bf00ff;
+    --yellow: #ffe500;
+    --text: #b8ccd8;
+    --dim: #4a6878;
+    --white: #eef6ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeDown 0.7s ease both;
+  }
+
+  .header .tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--orange);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+
+  .header h1 {
+    font-size: clamp(26px, 5vw, 46px);
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .header h1 span { color: var(--orange); text-shadow: 0 0 30px rgba(255,149,0,0.4); }
+
+  .header .sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+  }
+
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .stat-pill.s1 { background: rgba(255,149,0,0.1); border: 1px solid rgba(255,149,0,0.25); color: var(--orange); }
+  .stat-pill.s2 { background: rgba(0,255,136,0.08); border: 1px solid rgba(0,255,136,0.2); color: var(--green); }
+  .stat-pill.s3 { background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.2); color: var(--cyan); }
+  .stat-pill.s4 { background: rgba(255,229,0,0.08); border: 1px solid rgba(255,229,0,0.2); color: var(--yellow); }
+
+  /* Warning box */
+  .warning {
+    background: rgba(255,58,92,0.06);
+    border: 1px solid rgba(255,58,92,0.2);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--red);
+    line-height: 1.8;
+    animation: fadeUp 0.6s ease 0.1s both;
+  }
+
+  .warning strong { color: #ff6080; }
+
+  /* Section title */
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 20px;
+    margin-top: 44px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .section-dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .section-title h2 {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--white);
+    flex: 1;
+  }
+
+  .section-title .section-badge {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    padding: 4px 12px;
+    border-radius: 6px;
+  }
+
+  .section-title .section-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+  }
+
+  /* Category 1 - Tax Auction */
+  .cat1 .section-dot { background: var(--orange); box-shadow: 0 0 10px rgba(255,149,0,0.5); }
+  .cat1 .section-badge { background: rgba(255,149,0,0.1); color: var(--orange); border: 1px solid rgba(255,149,0,0.25); }
+
+  /* Category 2 - Foreclosures */
+  .cat2 .section-dot { background: var(--red); box-shadow: 0 0 10px rgba(255,58,92,0.5); }
+  .cat2 .section-badge { background: rgba(255,58,92,0.1); color: var(--red); border: 1px solid rgba(255,58,92,0.25); }
+
+  /* Category 3 - Hollister */
+  .cat3 .section-dot { background: var(--green); box-shadow: 0 0 10px rgba(0,255,136,0.5); }
+  .cat3 .section-badge { background: rgba(0,255,136,0.08); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+
+  /* Category 4 - Upcoming Auctions */
+  .cat4 .section-dot { background: var(--cyan); box-shadow: 0 0 10px rgba(0,245,255,0.5); }
+  .cat4 .section-badge { background: rgba(0,245,255,0.08); color: var(--cyan); border: 1px solid rgba(0,245,255,0.2); }
+
+  /* Category 5 - Drive for Dollars */
+  .cat5 .section-dot { background: var(--purple); box-shadow: 0 0 10px rgba(191,0,255,0.5); }
+  .cat5 .section-badge { background: rgba(191,0,255,0.08); color: var(--purple); border: 1px solid rgba(191,0,255,0.2); }
+
+  /* Info strip */
+  .info-strip {
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .info-strip.orange { background: rgba(255,149,0,0.06); border: 1px solid rgba(255,149,0,0.15); color: rgba(255,149,0,0.8); }
+  .info-strip.red { background: rgba(255,58,92,0.06); border: 1px solid rgba(255,58,92,0.15); color: rgba(255,100,120,0.9); }
+  .info-strip.green { background: rgba(0,255,136,0.05); border: 1px solid rgba(0,255,136,0.12); color: rgba(0,255,136,0.8); }
+  .info-strip.cyan { background: rgba(0,245,255,0.05); border: 1px solid rgba(0,245,255,0.12); color: rgba(0,245,255,0.8); }
+  .info-strip.purple { background: rgba(191,0,255,0.05); border: 1px solid rgba(191,0,255,0.12); color: rgba(191,0,255,0.9); }
+
+  /* Property grid */
+  .prop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+
+  .prop-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    transition: transform 0.2s, border-color 0.2s;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  .prop-card:hover { transform: translateY(-2px); }
+
+  .cat1 .prop-card:hover { border-color: rgba(255,149,0,0.35); }
+  .cat2 .prop-card:hover { border-color: rgba(255,58,92,0.35); }
+  .cat3 .prop-card:hover { border-color: rgba(0,255,136,0.35); }
+  .cat4 .prop-card:hover { border-color: rgba(0,245,255,0.35); }
+  .cat5 .prop-card:hover { border-color: rgba(191,0,255,0.35); }
+
+  .prop-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    margin-bottom: 6px;
+  }
+
+  .prop-address {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+
+  .prop-price {
+    font-family: 'Space Mono', monospace;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .cat1 .prop-price { color: var(--orange); }
+  .cat2 .prop-price { color: var(--red); }
+  .cat3 .prop-price { color: var(--green); }
+  .cat4 .prop-price { color: var(--cyan); }
+  .cat5 .prop-price { color: var(--purple); }
+
+  .prop-detail {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1.6;
+  }
+
+  .prop-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 10px;
+  }
+
+  .prop-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .tag-residential { background: rgba(0,245,255,0.08); color: rgba(0,245,255,0.7); }
+  .tag-land { background: rgba(255,229,0,0.08); color: rgba(255,229,0,0.7); }
+  .tag-hot { background: rgba(255,58,92,0.12); color: var(--red); }
+  .tag-cheap { background: rgba(0,255,136,0.08); color: rgba(0,255,136,0.7); }
+  .tag-buildable { background: rgba(191,0,255,0.08); color: rgba(191,0,255,0.7); }
+  .tag-drive { background: rgba(255,149,0,0.08); color: rgba(255,149,0,0.7); }
+
+  /* Auction table for cat4 */
+  .auction-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .auction-table th {
+    text-align: left;
+    padding: 10px 14px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    font-size: 9px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .auction-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    color: var(--text);
+    vertical-align: middle;
+  }
+
+  .auction-table tr:last-child td { border-bottom: none; }
+  .auction-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .auction-table tr { transition: background 0.2s; }
+
+  .auction-table .county { color: var(--white); font-weight: 700; }
+  .auction-table .date-live { color: var(--green); }
+  .auction-table .date-upcoming { color: var(--orange); }
+  .auction-table .date-watch { color: var(--cyan); }
+  .auction-table .link { color: var(--cyan); text-decoration: none; }
+  .auction-table .link:hover { text-decoration: underline; }
+
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .status-live { background: rgba(0,255,136,0.1); color: var(--green); border: 1px solid rgba(0,255,136,0.2); }
+  .status-soon { background: rgba(255,149,0,0.1); color: var(--orange); border: 1px solid rgba(255,149,0,0.2); }
+  .status-watch { background: rgba(0,245,255,0.08); color: var(--cyan); border: 1px solid rgba(0,245,255,0.15); }
+
+  /* Drive cards */
+  .drive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .drive-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .drive-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(191,0,255,0.3);
+  }
+
+  .drive-zip {
+    font-family: 'Space Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--purple);
+    text-shadow: 0 0 20px rgba(191,0,255,0.3);
+    margin-bottom: 4px;
+  }
+
+  .drive-area {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .drive-dist {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    margin-bottom: 10px;
+  }
+
+  .drive-steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .drive-steps li {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1.5;
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .drive-steps li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--purple);
+  }
+
+  /* Action plan */
+  .action-plan {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-top: 48px;
+    animation: fadeUp 0.6s ease 0.5s both;
+  }
+
+  .action-plan h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .action-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .action-col h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .action-col.now h4 { color: var(--green); }
+  .action-col.month h4 { color: var(--orange); }
+  .action-col.before h4 { color: var(--red); }
+
+  .action-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .action-items li {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    line-height: 1.5;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .action-items li .check {
+    color: var(--dim);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Budget section */
+  .budget-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 40px;
+    animation: fadeUp 0.6s ease 0.6s both;
+  }
+
+  .budget-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .budget-card h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .budget-amount {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 4px;
+  }
+
+  .budget-detail {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    line-height: 1.5;
+  }
+
+  .b1 .budget-amount { color: var(--orange); }
+  .b2 .budget-amount { color: var(--green); }
+  .b3 .budget-amount { color: var(--cyan); }
+  .b4 .budget-amount { color: var(--purple); }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 600px) {
+    .prop-grid { grid-template-columns: 1fr; }
+    .auction-table { font-size: 10px; }
+    .auction-table th, .auction-table td { padding: 8px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="tag">// REAL ESTATE INTELLIGENCE · APRIL 2026</div>
+    <h1>50 <span>Acquirable Properties</span></h1>
+    <div class="sub">AMEAD ESHPARI · WITHIN 40–60 MIN OF CUPERTINO, CA</div>
+    <div class="stats-bar">
+      <div class="stat-pill s1">🏚️ 30 Tax Auction Parcels</div>
+      <div class="stat-pill s2">🏠 8 Active Foreclosures</div>
+      <div class="stat-pill s3">🏗️ 3 Buildable Lots</div>
+      <div class="stat-pill s4">👁️ 4 Upcoming Auctions + 5 Drive Zones</div>
+    </div>
+  </div>
+
+  <!-- Warning -->
+  <div class="warning">
+    ⚠️ <strong>Before acting on any of these:</strong> Verify foundation/soil condition · Check for back taxes & liens · Get a title search (~$200–500) · Confirm zoning for residential use · Tax auction properties sold AS-IS with no guarantees · Always consult a licensed real estate attorney before purchasing.
+  </div>
+
+  <!-- ===== CATEGORY 1: STANISLAUS TAX AUCTION ===== -->
+  <div class="section-title cat1" style="animation-delay:0.1s">
+    <div class="section-dot"></div>
+    <h2>🟠 Category 1 — Stanislaus County Tax Auction</h2>
+    <div class="section-badge">CHEAPEST</div>
+  </div>
+
+  <div class="info-strip orange cat1">
+    📅 Auction: May 18–20, 2026 · bid4assets.com · NO RESERVE · $2,000 deposit + $35 fee required by May 15<br>
+    📧 Questions: taxes@stancounty.com · ☎️ (209) 525-6388 · ~60 min from Cupertino · Register FREE at bid4assets.com
+  </div>
+
+  <div class="cat1">
+    <div class="prop-grid">
+
+      <div class="prop-card" style="animation-delay:0.05s">
+        <div class="prop-num">#01 · APN 028-036-020</div>
+        <div class="prop-address">560 Jason Dr, Turlock, CA</div>
+        <div class="prop-price">$1,400</div>
+        <div class="prop-detail">Land parcel · Defaulted 2019 · Lowest bid on entire list</div>
+        <div class="prop-tags"><span class="prop-tag tag-land">LAND</span><span class="prop-tag tag-cheap">ULTRA CHEAP</span><span class="prop-tag tag-hot">HOT</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.07s">
+        <div class="prop-num">#02 · APN 005-042-039</div>
+        <div class="prop-address">2512 McAdoo Ave, Modesto, CA</div>
+        <div class="prop-price">$4,000</div>
+        <div class="prop-detail">Residential · Nadine Jordan estate · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-cheap">CHEAP</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.09s">
+        <div class="prop-num">#03 · APN 077-001-010</div>
+        <div class="prop-address">2413 Black Walnut Dr, Modesto, CA</div>
+        <div class="prop-price">$4,100</div>
+        <div class="prop-detail">Residential · Martinez Sylvia · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-cheap">CHEAP</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.11s">
+        <div class="prop-num">#04 · APN 086-004-031</div>
+        <div class="prop-address">928 Atlantic Dr, Modesto, CA</div>
+        <div class="prop-price">$5,300</div>
+        <div class="prop-detail">Residential · De La Torre Ayde · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.13s">
+        <div class="prop-num">#05 · APN 080-071-009</div>
+        <div class="prop-address">13610 Bentley St, Waterford, CA</div>
+        <div class="prop-price">$8,100</div>
+        <div class="prop-detail">Residential · Pena Brian · Defaulted 2018/2019</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.15s">
+        <div class="prop-num">#06 · APN 055-050-012</div>
+        <div class="prop-address">3700 Tully Rd #16, Modesto, CA</div>
+        <div class="prop-price">$8,900</div>
+        <div class="prop-detail">Residential unit · Parker Kay M · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.17s">
+        <div class="prop-num">#07 · APN 045-064-073</div>
+        <div class="prop-address">Blackberry Way, Keyes, CA</div>
+        <div class="prop-price">$9,900</div>
+        <div class="prop-detail">Land parcel · Ashlock Lonni · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-land">LAND</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.19s">
+        <div class="prop-num">#08 · APN 018-070-039</div>
+        <div class="prop-address">2312 Charles St, Hughson, CA</div>
+        <div class="prop-price">$10,100</div>
+        <div class="prop-detail">Residential · Postma Paul · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.21s">
+        <div class="prop-num">#09 · APN 132-049-020</div>
+        <div class="prop-address">3948 Topeka St, Riverbank, CA</div>
+        <div class="prop-price">$14,600</div>
+        <div class="prop-detail">Residential · Albor Gabriel · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.23s">
+        <div class="prop-num">#10 · APN 038-009-011</div>
+        <div class="prop-address">841 River Rd, Modesto, CA</div>
+        <div class="prop-price">$40,300</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted since 2013/2014 · Long abandoned</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">LONG ABANDONED</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.25s">
+        <div class="prop-num">#11 · APN 038-009-012</div>
+        <div class="prop-address">843 River Rd, Modesto, CA</div>
+        <div class="prop-price">$43,800</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted since 2013/2014 · Next door to #10</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">ADJACENT TO #10</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.27s">
+        <div class="prop-num">#12 · APN 037-058-023</div>
+        <div class="prop-address">1012 Marlow St, Modesto, CA</div>
+        <div class="prop-price">$46,300</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted since 2013/2014 · 10+ years abandoned</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">10YR ABANDONED</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.29s">
+        <div class="prop-num">#13 · APN 069-012-044</div>
+        <div class="prop-address">2005 Glen Ridge Dr, Ceres, CA</div>
+        <div class="prop-price">$20,700</div>
+        <div class="prop-detail">Residential · Gopher Five LLC · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.31s">
+        <div class="prop-num">#14 · APN 044-021-042</div>
+        <div class="prop-address">2943 Curtion Ave, Turlock, CA</div>
+        <div class="prop-price">$24,700</div>
+        <div class="prop-detail">Residential · Escobedo Miriam · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.33s">
+        <div class="prop-num">#15 · APN 067-002-090</div>
+        <div class="prop-address">2504 Tallent Dr, Modesto, CA</div>
+        <div class="prop-price">$24,100</div>
+        <div class="prop-detail">Residential · Hernandez Joel & Deborah · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.35s">
+        <div class="prop-num">#16 · APN 133-019-036</div>
+        <div class="prop-address">404 S Abbie St, Empire, CA</div>
+        <div class="prop-price">$27,300</div>
+        <div class="prop-detail">Residential · Juarez Julia · Defaulted 2018/2019</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.37s">
+        <div class="prop-num">#17 · APN 042-027-013</div>
+        <div class="prop-address">227 Walden St, Modesto, CA</div>
+        <div class="prop-price">$33,700</div>
+        <div class="prop-detail">Residential · Quiroz Alicia E · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.39s">
+        <div class="prop-num">#18 · APN 111-007-030</div>
+        <div class="prop-address">217 Semple St, Modesto, CA</div>
+        <div class="prop-price">$36,100</div>
+        <div class="prop-detail">Residential · Dreenan Carolyn Ann · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.41s">
+        <div class="prop-num">#19 · APN 132-004-020</div>
+        <div class="prop-address">3219 High St, Riverbank, CA</div>
+        <div class="prop-price">$41,300</div>
+        <div class="prop-detail">Residential · Kuffel Kimberly Ann · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.43s">
+        <div class="prop-num">#20 · APN 069-019-014</div>
+        <div class="prop-address">3106 Moore Rd, Ceres, CA</div>
+        <div class="prop-price">$47,800</div>
+        <div class="prop-detail">Residential · Burns Curn & Imogene heirs · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.45s">
+        <div class="prop-num">#21 · APN 045-019-057</div>
+        <div class="prop-address">5300 Clark St, Keyes, CA</div>
+        <div class="prop-price">$52,200</div>
+        <div class="prop-detail">Residential · Johnson Doyle TR heirs · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.47s">
+        <div class="prop-num">#22 · APN 075-046-021</div>
+        <div class="prop-address">6118 McDevitt Dr, Riverbank, CA</div>
+        <div class="prop-price">$52,100</div>
+        <div class="prop-detail">Residential · Wiley Susan Scott · Defaulted 2017/2018</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.49s">
+        <div class="prop-num">#23 · APN 132-046-010</div>
+        <div class="prop-address">6260 8th St, Riverbank, CA</div>
+        <div class="prop-price">$34,600</div>
+        <div class="prop-detail">Residential · Johnston Glenda heirs · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.51s">
+        <div class="prop-num">#24 · APN 075-026-030</div>
+        <div class="prop-address">2212 Cherry Tree Ln, Riverbank, CA</div>
+        <div class="prop-price">$80,200</div>
+        <div class="prop-detail">Residential · Russell Mary TR · Defaulted 2018/2019 · Larger property</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.53s">
+        <div class="prop-num">#25 · APN 037-033-042</div>
+        <div class="prop-address">1408 Pelton Ave, Modesto, CA</div>
+        <div class="prop-price">$38,400</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted 2013/2014 · 10+ years abandoned</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">10YR ABANDONED</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.55s">
+        <div class="prop-num">#26 · APN 037-035-002</div>
+        <div class="prop-address">1418 Avalon Ave, Modesto, CA</div>
+        <div class="prop-price">$38,600</div>
+        <div class="prop-detail">Residential · Castillo Omar Acevedo · Defaulted 2018/2019</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.57s">
+        <div class="prop-num">#27 · APN 038-032-027</div>
+        <div class="prop-address">913 Santa Fe Ave, Modesto, CA</div>
+        <div class="prop-price">$15,500</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-cheap">CHEAP</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.59s">
+        <div class="prop-num">#28 · APN 038-036-013</div>
+        <div class="prop-address">1113 Alamo Ave, Modesto, CA</div>
+        <div class="prop-price">$12,900</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted 2019/2020</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-cheap">CHEAP</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.61s">
+        <div class="prop-num">#29 · APN 056-036-033</div>
+        <div class="prop-address">1537 Inyo Ave, Modesto, CA</div>
+        <div class="prop-price">$34,100</div>
+        <div class="prop-detail">Residential · Sigala Steve · Defaulted 2013/2014</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.63s">
+        <div class="prop-num">#30 · APN 116-008-005</div>
+        <div class="prop-address">330 San Juan Dr, Modesto, CA</div>
+        <div class="prop-price">$103,400</div>
+        <div class="prop-detail">Residential · Rosander Velma J TR heirs · Defaulted 2017/2018 · Larger property</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY 2: SAN JOSE FORECLOSURES ===== -->
+  <div class="section-title cat2" style="animation-delay:0.2s">
+    <div class="section-dot"></div>
+    <h2>🔴 Category 2 — San Jose Active Foreclosures</h2>
+    <div class="section-badge">CLOSEST</div>
+  </div>
+
+  <div class="info-strip red">
+    Source: foreclosurelistings.com · Bank-owned or in active foreclosure · Subscribe ~$40/mo for full addresses · Also check propertyshark.com/mason/CA/San-Jose/Trustees-Sales for 21 upcoming trustee sales
+  </div>
+
+  <div class="cat2">
+    <div class="prop-grid">
+
+      <div class="prop-card" style="animation-delay:0.1s">
+        <div class="prop-num">#31 · ZIP 95123</div>
+        <div class="prop-address">Tradewinds Dr, San Jose, CA</div>
+        <div class="prop-price">$389,900</div>
+        <div class="prop-detail">1 bed / 1 bath · 722 sqft · LOWEST price in SJ · Contact lender directly</div>
+        <div class="prop-tags"><span class="prop-tag tag-hot">LOWEST SJ PRICE</span><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.12s">
+        <div class="prop-num">#32 · ZIP 95123</div>
+        <div class="prop-address">Tradewinds Dr #11, San Jose, CA</div>
+        <div class="prop-price">$439,900</div>
+        <div class="prop-detail">1 bed / 1 bath · 722 sqft · Same distressed complex as #31</div>
+        <div class="prop-tags"><span class="prop-tag tag-hot">SAME COMPLEX</span><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.14s">
+        <div class="prop-num">#33 · ZIP 95123</div>
+        <div class="prop-address">Tradewinds Dr Apt 11, San Jose, CA</div>
+        <div class="prop-price">$464,900</div>
+        <div class="prop-detail">1 bed / 1 bath · 722 sqft · 3rd unit in same complex · Bundle offer potential</div>
+        <div class="prop-tags"><span class="prop-tag tag-hot">BUNDLE POTENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.16s">
+        <div class="prop-num">#34 · ZIP 95135</div>
+        <div class="prop-address">Cribari Grn, San Jose, CA</div>
+        <div class="prop-price">$475,000</div>
+        <div class="prop-detail">2 bed / 2 bath · 1,223 sqft · East SJ · Good size for price</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.18s">
+        <div class="prop-num">#35 · ZIP 95126</div>
+        <div class="prop-address">Saddle Rack St Apt 234, San Jose, CA</div>
+        <div class="prop-price">$525,000</div>
+        <div class="prop-detail">1 bed / 1 bath · 790 sqft · Midtown area</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.20s">
+        <div class="prop-num">#36 · ZIP 95111</div>
+        <div class="prop-address">Kenbrook Cir, San Jose, CA</div>
+        <div class="prop-price">$575,000</div>
+        <div class="prop-detail">2 bed / 2 bath · 1,012 sqft · Bank-owned REO · East SJ</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">BANK OWNED</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.22s">
+        <div class="prop-num">#37 · ZIP 95112</div>
+        <div class="prop-address">S 3rd St, San Jose, CA</div>
+        <div class="prop-price">$625,000</div>
+        <div class="prop-detail">2 bed / 2 bath · 1,000 sqft · Downtown adjacent · No photos listed</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.24s">
+        <div class="prop-num">#38 · ZIP 95127</div>
+        <div class="prop-address">N Capitol Ave #266, San Jose, CA</div>
+        <div class="prop-price">$489,950</div>
+        <div class="prop-detail">2 bed / 1 bath · 828 sqft · Alum Rock area · Bank foreclosure</div>
+        <div class="prop-tags"><span class="prop-tag tag-residential">RESIDENTIAL</span><span class="prop-tag tag-hot">BANK OWNED</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY 3: HOLLISTER LOTS ===== -->
+  <div class="section-title cat3" style="animation-delay:0.25s">
+    <div class="section-dot"></div>
+    <h2>🟢 Category 3 — Hollister Buildable Lots</h2>
+    <div class="section-badge">READY TO BUILD</div>
+  </div>
+
+  <div class="info-strip green">
+    42 min from Cupertino via CA-152 · All 3 lots are in Los Pinars subdivision · Utilities at street · Approved septic + water meter · Ready for Well Done 1 kit home · MLS ML82023407 · Contact Coldwell Banker
+  </div>
+
+  <div class="cat3">
+    <div class="prop-grid">
+
+      <div class="prop-card" style="animation-delay:0.1s">
+        <div class="prop-num">#39 · MLS ML82023407</div>
+        <div class="prop-address">1565 Cushman St, Hollister, CA 95023</div>
+        <div class="prop-price">$209,900</div>
+        <div class="prop-detail">4,048 sqft · Utilities at street · Approved septic permit · Water meter on site · Ready to build NOW</div>
+        <div class="prop-tags"><span class="prop-tag tag-buildable">BUILD READY</span><span class="prop-tag tag-hot">BEST LOT</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.12s">
+        <div class="prop-num">#40 · Adjacent to #39</div>
+        <div class="prop-address">1571 Cushman St, Hollister, CA 95023</div>
+        <div class="prop-price">~$209,900</div>
+        <div class="prop-detail">Same subdivision · Same utilities · Neighbor to #39 · Ask agent about bundle discount</div>
+        <div class="prop-tags"><span class="prop-tag tag-buildable">BUILD READY</span><span class="prop-tag tag-cheap">BUNDLE OFFER</span></div>
+      </div>
+
+      <div class="prop-card" style="animation-delay:0.14s">
+        <div class="prop-num">#41 · Adjacent to #40</div>
+        <div class="prop-address">1575 Cushman St, Hollister, CA 95023</div>
+        <div class="prop-price">~$209,900</div>
+        <div class="prop-detail">3rd lot in same row · All 3 together — bundle offer may get one for $150–175k</div>
+        <div class="prop-tags"><span class="prop-tag tag-buildable">BUILD READY</span><span class="prop-tag tag-cheap">BUNDLE OFFER</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CATEGORY 4: UPCOMING AUCTIONS ===== -->
+  <div class="section-title cat4" style="animation-delay:0.3s">
+    <div class="section-dot"></div>
+    <h2>🔵 Category 4 — Upcoming Tax Auctions to Register For</h2>
+    <div class="section-badge">CALENDAR</div>
+  </div>
+
+  <div class="info-strip cyan">
+    Register FREE at bid4assets.com · Sign up for email alerts to be notified when property lists drop · Each auction requires a refundable deposit to bid
+  </div>
+
+  <table class="auction-table" style="background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; margin-bottom:8px;">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>County</th>
+        <th>Auction Dates</th>
+        <th>Status</th>
+        <th>Deposit</th>
+        <th>Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;">#42</td>
+        <td class="county">Stanislaus County, CA</td>
+        <td class="date-upcoming" style="font-family:'Space Mono',monospace;font-size:11px;">May 18–20, 2026</td>
+        <td><span class="status-badge status-soon">REGISTER NOW</span></td>
+        <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);">$2,000 + $35</td>
+        <td style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);">52 parcels · bids from $1,400 · NO RESERVE · Best deal</td>
+      </tr>
+      <tr>
+        <td style="color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;">#43</td>
+        <td class="county">Monterey County, CA</td>
+        <td class="date-upcoming" style="font-family:'Space Mono',monospace;font-size:11px;">May 23–27, 2026</td>
+        <td><span class="status-badge status-soon">UPCOMING</span></td>
+        <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);">TBD</td>
+        <td style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);">~90 min from Cupertino · bid4assets.com</td>
+      </tr>
+      <tr>
+        <td style="color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;">#44</td>
+        <td class="county">Santa Cruz County, CA</td>
+        <td class="date-upcoming" style="font-family:'Space Mono',monospace;font-size:11px;">June 5–8, 2026</td>
+        <td><span class="status-badge status-soon">UPCOMING</span></td>
+        <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);">TBD</td>
+        <td style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);">40 min from Cupertino · Annual auction</td>
+      </tr>
+      <tr>
+        <td style="color:var(--dim);font-family:'Space Mono',monospace;font-size:11px;">#45</td>
+        <td class="county">Santa Clara County, CA</td>
+        <td class="date-watch" style="font-family:'Space Mono',monospace;font-size:11px;">TBA 2026</td>
+        <td><span class="status-badge status-watch">MONITOR</span></td>
+        <td style="font-family:'Space Mono',monospace;font-size:11px;color:var(--dim);">$5,000 + $35</td>
+        <td style="font-family:'Space Mono',monospace;font-size:10px;color:var(--dim);">90 parcels last time · bids from $1,400 · CLOSEST · salestaxsale@tax.sccgov.org</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ===== CATEGORY 5: DRIVE FOR DOLLARS ===== -->
+  <div class="section-title cat5" style="animation-delay:0.35s">
+    <div class="section-dot"></div>
+    <h2>🟣 Category 5 — Drive-for-Dollars Target Zones</h2>
+    <div class="section-badge">HIDDEN DEALS</div>
+  </div>
+
+  <div class="info-strip purple">
+    Spot a property → Write address → Look up owner FREE at assessor.sccgov.org → Send handwritten letter as cash buyer → Follow up 3x · This is how investors find deals nobody else knows about
+  </div>
+
+  <div class="drive-grid">
+
+    <div class="drive-card">
+      <div class="drive-zip">95116</div>
+      <div class="drive-area">East San Jose — Alum Rock</div>
+      <div class="drive-dist">📍 ~20 min from Cupertino</div>
+      <ul class="drive-steps">
+        <li>High concentration of pre-foreclosures</li>
+        <li>Older homes, some neglected</li>
+        <li>Drive Story Rd, King Rd, Alum Rock Ave</li>
+        <li>Look for: boarded windows, overgrown yards, no lights</li>
+        <li>Look up owner: assessor.sccgov.org (free)</li>
+      </ul>
+      <div class="prop-tags" style="margin-top:12px">
+        <span class="prop-tag tag-drive">ZONE #46</span>
+        <span class="prop-tag tag-hot">HIGH DENSITY</span>
+      </div>
+    </div>
+
+    <div class="drive-card">
+      <div class="drive-zip">95122</div>
+      <div class="drive-area">East San Jose — Story Rd</div>
+      <div class="drive-dist">📍 ~22 min from Cupertino</div>
+      <ul class="drive-steps">
+        <li>Highest pre-foreclosure density in SJ</li>
+        <li>Mix of SFR and multi-family</li>
+        <li>Drive Capitol Ave, Senter Rd, Tully Rd</li>
+        <li>Contact owners of vacant properties directly</li>
+        <li>Many motivated sellers — divorce, estate, financial hardship</li>
+      </ul>
+      <div class="prop-tags" style="margin-top:12px">
+        <span class="prop-tag tag-drive">ZONE #47</span>
+        <span class="prop-tag tag-hot">MOST FORECLOSURES</span>
+      </div>
+    </div>
+
+    <div class="drive-card">
+      <div class="drive-zip">95020</div>
+      <div class="drive-area">Gilroy Outskirts</div>
+      <div class="drive-dist">📍 ~38 min from Cupertino</div>
+      <ul class="drive-steps">
+        <li>Older ranch homes, some sitting empty</li>
+        <li>Rural edges have abandoned farmhouses</li>
+        <li>Drive Hecker Pass Hwy, Day Rd, Leavesley Rd</li>
+        <li>Estate sales and elderly owner situations common</li>
+        <li>San Benito County border area has cheaper land</li>
+      </ul>
+      <div class="prop-tags" style="margin-top:12px">
+        <span class="prop-tag tag-drive">ZONE #48</span>
+        <span class="prop-tag tag-land">RURAL FINDS</span>
+      </div>
+    </div>
+
+    <div class="drive-card">
+      <div class="drive-zip">95023</div>
+      <div class="drive-area">Hollister Downtown Core</div>
+      <div class="drive-dist">📍 ~42 min from Cupertino</div>
+      <ul class="drive-steps">
+        <li>Older Victorian and Craftsman stock</li>
+        <li>Some properties neglected for years</li>
+        <li>Drive San Benito St, Nash Rd, Hillcrest Rd</li>
+        <li>San Benito County Assessor for owner lookup</li>
+        <li>Growing city — good long-term appreciation</li>
+      </ul>
+      <div class="prop-tags" style="margin-top:12px">
+        <span class="prop-tag tag-drive">ZONE #49</span>
+        <span class="prop-tag tag-buildable">HISTORIC STOCK</span>
+      </div>
+    </div>
+
+    <div class="drive-card">
+      <div class="drive-zip">95037</div>
+      <div class="drive-area">Morgan Hill Rural SE</div>
+      <div class="drive-dist">📍 ~35 min from Cupertino</div>
+      <ul class="drive-steps">
+        <li>Farmhouses and rural properties occasionally abandoned</li>
+        <li>Drive East Main Ave, Watsonville Rd, Burnett Ave</li>
+        <li>Estate situations common in rural areas</li>
+        <li>Slower market — 74+ days on market avg</li>
+        <li>Good for motivated seller negotiation</li>
+      </ul>
+      <div class="prop-tags" style="margin-top:12px">
+        <span class="prop-tag tag-drive">ZONE #50</span>
+        <span class="prop-tag tag-land">RURAL RANCHES</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Action Plan -->
+  <div class="action-plan">
+    <h3>// Action Plan — In Order</h3>
+    <div class="action-cols">
+      <div class="action-col now">
+        <h4>🟢 THIS WEEK</h4>
+        <ul class="action-items">
+          <li><span class="check">□</span> Register at bid4assets.com (free)</li>
+          <li><span class="check">□</span> Submit $2,000 deposit by May 15 for Stanislaus auction</li>
+          <li><span class="check">□</span> Browse 52 Stanislaus parcels — focus on #1–10 under $10k</li>
+          <li><span class="check">□</span> Check propertyshark.com for 21 SJ trustee sales</li>
+          <li><span class="check">□</span> Sign up for bid4assets.com email alerts</li>
+        </ul>
+      </div>
+      <div class="action-col month">
+        <h4>🟠 THIS MONTH</h4>
+        <ul class="action-items">
+          <li><span class="check">□</span> Call Coldwell Banker — Hollister Cushman St lots</li>
+          <li><span class="check">□</span> Subscribe to foreclosurelistings.com (~$40/mo)</li>
+          <li><span class="check">□</span> Drive East San Jose (95116 + 95122) on a weekend</li>
+          <li><span class="check">□</span> Email salestaxsale@tax.sccgov.org — ask next SCC auction date</li>
+          <li><span class="check">□</span> Send handwritten letters to 5 vacant property owners</li>
+        </ul>
+      </div>
+      <div class="action-col before">
+        <h4>🔴 BEFORE BUYING ANYTHING</h4>
+        <ul class="action-items">
+          <li><span class="check">□</span> Order title search (~$200–500)</li>
+          <li><span class="check">□</span> Check back taxes on county assessor site (free)</li>
+          <li><span class="check">□</span> Get soil/foundation inspection if possible</li>
+          <li><span class="check">□</span> Confirm zoning allows residential use</li>
+          <li><span class="check">□</span> Consult real estate attorney before closing</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Budget -->
+  <div class="budget-grid">
+    <div class="budget-card b1">
+      <h4>Tax Auction Win</h4>
+      <div class="budget-amount">$1,400–$50k</div>
+      <div class="budget-detail">Land/property cost<br>+ $150–200k kit home<br>= Total $150–250k</div>
+    </div>
+    <div class="budget-card b2">
+      <h4>Hollister Lot</h4>
+      <div class="budget-amount">$150–210k</div>
+      <div class="budget-detail">Lot cost<br>+ $150–200k kit home<br>= Total $300–410k</div>
+    </div>
+    <div class="budget-card b3">
+      <h4>SJ Foreclosure</h4>
+      <div class="budget-amount">$390–$625k</div>
+      <div class="budget-detail">Renovate existing<br>No kit needed<br>= All-in $450–750k</div>
+    </div>
+    <div class="budget-card b4">
+      <h4>SCC Tax Auction</h4>
+      <div class="budget-amount">$1,400–$50k</div>
+      <div class="budget-detail">Closest to Cupertino<br>+ $150–200k kit home<br>= Best location ROI</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
